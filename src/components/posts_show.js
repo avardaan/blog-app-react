@@ -6,11 +6,15 @@ import { Link } from 'react-router-dom'
 class PostsShow extends Component {
 
   componentDidMount() {
-    // get url of this route, provided directly by react router
-    // react router gives us match, params contains all the wildcard values that exist in the url
-    const id = this.props.match.params.id
-    // call action creator to fetch post
-    this.props.fetchPost(id)
+    // Basic Caching - if post already exists in props, then don't make network request!
+    if (!this.props.post) {
+      // get url of this route, provided directly by react router
+      // react router gives us match, params contains all the wildcard values that exist in the url
+      const id = this.props.match.params.id
+      // call action creator to fetch post
+      this.props.fetchPost(id)
+    }
+
   }
 
   render() {
