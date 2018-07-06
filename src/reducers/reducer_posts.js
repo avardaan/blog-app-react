@@ -1,6 +1,7 @@
 import {
   FETCH_POSTS,
-  FETCH_POST
+  FETCH_POST,
+  DELETE_POST
 } from '../actions'
 import _ from 'lodash'
 
@@ -25,6 +26,11 @@ export default function(state={}, action) {
       // mapKeys maps the string you give as second argument to a key within the payload object
       // and creates a new object with that as the key and the object as its value
       return _.mapKeys(action.payload.data, 'id')
+
+    //
+    case DELETE_POST:
+      // look at state object, if the state object has a key action.paylad (which is the post id), then remove the key-value pair
+      return _.omit(state, action.payload)
 
     default:
       return state
