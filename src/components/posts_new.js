@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { createPost } from '../actions'
 
 
 class PostsNew extends Component {
@@ -33,7 +35,11 @@ class PostsNew extends Component {
 
   // form submission logic
   onSubmit(values) {
-    console.log(values)
+    // fire action creater to make sttp post request to blog API, it also takes a callback function
+    this.props.createPost(values, () => {
+      // PROGRAMMATIC NAVIGATION, back to homepage
+      this.props.history.push('/')
+    })
   }
 
   render() {
@@ -92,4 +98,6 @@ function validate(values) {
 export default reduxForm({
   validate: validate,
   form: 'PostsNewForm'
-})(PostsNew)
+})(
+  connect(null, { createPost })(PostsNew)
+)
